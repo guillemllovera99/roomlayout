@@ -40,6 +40,223 @@ A lightweight, free room/apartment layout tool that lets you draw **2D floor pla
 
 ---
 
+## Intructions to install on Terminal (For macOS / Linux)
+
+--- 
+# 0) Ensure Node.js ≥ 20.19 (fixes EBADENGINE & Vite plugin issues) ---
+node -v  # if this prints < 20.19 or "command not found", install via nvm:
+
+# Install nvm (if you don't have it):
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+
+# Reload your shell so 'nvm' works in this session:
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Install & use Node 20 LTS:
+nvm install 20
+nvm use 20
+nvm alias default 20
+
+node -v
+npm -v
+
+# --- 1) Create the project with Vite (React + TypeScript template) ---
+npm create vite@latest room-planner -- --template react-ts
+cd room-planner
+
+# --- 2) Install runtime deps (3D/State/Schema/Utils) ---
+npm i three @react-three/fiber @react-three/drei zustand zod classnames file-saver
+
+# --- 3) Install dev deps (Tailwind/PostCSS/Types) ---
+npm i -D tailwindcss postcss autoprefixer @types/three
+
+# --- 4) Tailwind setup (Method A: CLI). If CLI fails, use Method B below ---
+npx tailwindcss init -p
+
+# Overwrite tailwind.config.js content so Tailwind scans .tsx files:
+cat > tailwind.config.js <<'EOF'
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+EOF
+
+# Ensure PostCSS config exists (created by -p above). If not, create it:
+cat > postcss.config.js <<'EOF'
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+EOF
+
+# Create Tailwind entry CSS:
+mkdir -p src
+cat > src/index.css <<'EOF'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+EOF
+
+# --- 5) (Optional) Create skeleton folders used by the app layout ---
+mkdir -p src/ui src/editor src/viewer
+
+# --- 6) Start the dev server (Vite) ---
+npm run dev  # opens http://localhost:5173 (or similar)
+
+## For Windows (PowerShell)
+
+# --- 0) Ensure Node.js ≥ 20.19 ---
+node -v  # if < 20.19, install Node 20 LTS from https://nodejs.org/en
+npm -v
+
+# (Optional) nvm-windows users:
+# nvm install 20
+# nvm use 20
+
+# --- 1) Create the project with Vite (React + TypeScript) ---
+npm create vite@latest room-planner -- --template react-ts
+cd room-planner
+
+# --- 2) Install runtime deps ---
+npm i three @react-three/fiber @react-three/drei zustand zod classnames file-saver
+
+# --- 3) Install dev deps ---
+npm i -D tailwindcss postcss autoprefixer @types/three
+
+# --- 4) Tailwind setup (Method A: CLI). If CLI fails, use Method B below ---
+npx tailwindcss init -p
+
+# Overwrite tailwind.config.js content:
+@'
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+'@ | Set-Content -Encoding utf8 tailwind.config.js
+
+# Ensure PostCSS file exists; create/overwrite if needed:
+@'
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+'@ | Set-Content -Encoding utf8 postcss.config.js
+
+# Create Tailwind entry CSS:
+New-Item -ItemType Directory -Force src | Out-Null
+@'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+'@ | Set-Content -Encoding utf8 src/index.css
+
+# --- 5) (Optional) Create skeleton folders used by the app layout ---
+New-Item -ItemType Directory -Force src\ui | Out-Null
+New-Item -ItemType Directory -Force src\editor | Out-Null
+New-Item -ItemType Directory -Force src\viewer | Out-Null
+
+# --- 6) Start the dev server ---
+npm run dev
+
+## Troubleshooting (some fixes)
+
+# A) “EBADENGINE” or Vite/plugin requires newer Node
+node -v             # if < 20.19
+# macOS/Linux:
+nvm install 20 && nvm use 20 && nvm alias default 20
+# Windows (nvm-windows users):
+# nvm install 20 && nvm use 20
+
+# Reinstall deps to clear engine locks:
+rm -rf node_modules package-lock.json
+npm i
+
+# B) npx tailwindcss errors (“could not determine executable to run”)
+Skip the CLI; write config files manually.
+
+# macOS/Linux:
+cat > tailwind.config.js <<'EOF'
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+EOF
+
+cat > postcss.config.js <<'EOF'
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+EOF
+
+cat > src/index.css <<'EOF'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+EOF
+
+# Windows (PowerShell):
+@'
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: { extend: {} },
+  plugins: [],
+};
+'@ | Set-Content -Encoding utf8 tailwind.config.js
+
+@'
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+'@ | Set-Content -Encoding utf8 postcss.config.js
+
+@'
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+'@ | Set-Content -Encoding utf8 src/index.css
+
+# npm run dev says “Missing script: dev”
+npm i -D vite
+npm pkg set scripts.dev="vite"
+npm pkg set scripts.build="vite build"
+npm pkg set scripts.preview="vite preview"
+npm run dev
+
+# D) Dev server port already in use (Vite stuck on :5173)
+# macOS/Linux:
+lsof -i :5173
+kill -9 PID_HERE
+
+# E) Styles not applying (Tailwind looks dead)
+Ensure src/index.css is imported in src/main.tsx
+Ensure tailwind.config.js 'content' includes "./src/**/*.{ts,tsx}"
+Restart dev server:
+pkill -f vite || true   # macOS/Linux (ignore error if none)
+npm run dev
+
+npm i -D @types/three
+rm -rf node_modules package-lock.json
+npm i
+
+
 ## Quick Start
 
 ```bash
