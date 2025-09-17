@@ -256,10 +256,27 @@ npm i -D @types/three
 rm -rf node_modules package-lock.json
 npm i
 
+F) Type errors or import issues for three.js types
+npm i -D @types/three
+rm -rf node_modules package-lock.json
+npm i
+G) Accidental typo “vote” instead of “vite”
+# Correct usage:
+npm create vite@latest myapp -- --template react-ts
+npm run dev
+
+## Daily Commands
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview local production build
+npm run preview
 
 ## Quick Start
 
-```bash
 # 0) (macOS/Linux) Use nvm to get Node 20+ (recommended)
 # If you already have Node ≥ 20.19, skip to step 1.
 export NVM_DIR="$HOME/.nvm"
