@@ -1,4 +1,4 @@
-# Room Planner — DIY Home 3D Creator (React + Three.js)
+# Room Planner — Home 3D Creator (React + Three.js)
 
 A lightweight, free room/apartment layout tool that lets you draw **2D floor plans** with precise cm snapping and preview them in a **3D view**. Includes a simple **Save/Load** format and optional **GLTF/GLB** furniture import. Built with **React + Vite + TypeScript**, **Three.js (@react-three/fiber + drei)**, and **Tailwind CSS**.
 
