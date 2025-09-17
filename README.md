@@ -6,7 +6,7 @@ A lightweight, free room/apartment layout tool that lets you draw **2D floor pla
 
 ---
 
-## ✨ Features (MVP)
+## Features (MVP)
 
 - **2D Plan** canvas (grid + snap in cm)
 - **3D View** scene (placeholder ready; plug in your models)
@@ -20,7 +20,7 @@ A lightweight, free room/apartment layout tool that lets you draw **2D floor pla
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - **Vite + React + TypeScript**
 - **Three.js** via **@react-three/fiber** and helpers from **@react-three/drei**
@@ -30,7 +30,7 @@ A lightweight, free room/apartment layout tool that lets you draw **2D floor pla
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 - **Node.js ≥ 20.19** (recommended; required by latest Vite/plugin versions)
 - A terminal (macOS Terminal, Windows Terminal/PowerShell, or any shell)
@@ -40,7 +40,7 @@ A lightweight, free room/apartment layout tool that lets you draw **2D floor pla
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 0) (macOS/Linux) Use nvm to get Node 20+ (recommended)
@@ -321,7 +321,7 @@ Open the printed URL (e.g., `http://localhost:5173` or `:5174`). You should see 
 
 ---
 
-## 🕹️ Use Guide (MVP)
+## Use Guide (MVP)
 
 1. **Set Grid snap** (Right Panel) to 1–10 cm.
 2. **Draw walls/rooms** (buttons visible in the toolbar; MVP has placeholders—you can paste the richer editor later).
@@ -332,7 +332,7 @@ Open the printed URL (e.g., `http://localhost:5173` or `:5174`). You should see 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 room-planner/
@@ -359,7 +359,7 @@ room-planner/
 
 ---
 
-## 🧩 Enhancements (drop‑in)
+## Enhancements (drop‑in)
 
 - **Drag‑drop GLTF** into the 3D view (adds a furniture item at the cursor).
 - **Segment dimension labels** in the 2D view (show wall lengths in cm).
@@ -372,7 +372,7 @@ room-planner/
 
 ---
 
-## 🛠️ Troubleshooting
+## Troubleshooting
 
 - **Blank page** → ensure `index.html` has `<div id="root"></div>` and `src/main.tsx` imports `./index.css` and renders `<App/>`.
 - **Styles not applying** → verify `tailwind.config.js` `content` paths and that `src/index.css` has exactly the three `@tailwind` lines; restart `npm run dev`.
@@ -381,12 +381,12 @@ room-planner/
 
 ---
 
-## 📜 License
+## License
 
 MIT (feel free to change to your preference).
 
 ---
 
-## 🙌 Acknowledgements
+## Acknowledgements
 
 Inspired by the workflow of Sweet Home 3D, re‑imagined with a modern web stack.
