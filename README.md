@@ -3,7 +3,8 @@
 A lightweight, free room/apartment layout tool that lets you draw **2D floor plans** with precise cm snapping and preview them in a **3D view**. Includes a simple **Save/Load** format and optional **GLTF/GLB** furniture import. Built with **React + Vite + TypeScript**, **Three.js (@react-three/fiber + drei)**, and **Tailwind CSS**.
 
 > Goal: replicate the core feel of Sweet Home 3D without paywalls and keep the code fully local & hackable.
-
+# Important note:
+Extra folder needed at request!!!
 ---
 
 ## Features (MVP)
